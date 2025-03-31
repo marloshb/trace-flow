@@ -1,92 +1,90 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base colors - earth/natural tones */
+    --background: 120 20% 97%; /* Light green-gray */
+    --foreground: 120 10% 20%; /* Dark green-gray */
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 120 10% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 120 10% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - forest green */
+    --primary: 142 48% 27%;
+    --primary-foreground: 142 30% 95%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - earthy brown */
+    --secondary: 35 30% 42%;
+    --secondary-foreground: 35 30% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 120 10% 92%;
+    --muted-foreground: 120 5% 45%;
 
     --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent-foreground: 142 48% 27%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 120 10% 85%;
+    --input: 120 10% 85%;
+    --ring: 142 48% 27%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 142 48% 27%;
+    --sidebar-foreground: 142 30% 95%;
+    --sidebar-primary: 142 30% 95%;
+    --sidebar-primary-foreground: 142 48% 27%;
+    --sidebar-accent: 142 30% 20%;
+    --sidebar-accent-foreground: 142 30% 95%;
+    --sidebar-border: 142 30% 20%;
+    --sidebar-ring: 142 48% 40%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 120 10% 10%;
+    --foreground: 120 10% 90%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 120 10% 12%;
+    --card-foreground: 120 10% 90%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 120 10% 12%;
+    --popover-foreground: 120 10% 90%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 142 40% 40%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 35 30% 30%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 120 10% 20%;
+    --muted-foreground: 120 10% 70%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 120 10% 20%;
+    --accent-foreground: 120 10% 90%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 120 10% 25%;
+    --input: 120 10% 25%;
+    --ring: 142 40% 40%;
+
+    --sidebar-background: 142 40% 15%;
+    --sidebar-foreground: 142 30% 95%;
+    --sidebar-primary: 142 30% 95%;
+    --sidebar-primary-foreground: 142 40% 15%;
+    --sidebar-accent: 142 30% 10%;
+    --sidebar-accent-foreground: 142 30% 95%;
+    --sidebar-border: 142 30% 10%;
+    --sidebar-ring: 142 40% 40%;
   }
 }
 
@@ -97,5 +95,65 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/50 rounded-full hover:bg-primary/70 transition-colors;
+}
+
+@layer components {
+  /* Supply chain node styles */
+  .node-farmer {
+    @apply bg-geo-green-light text-white;
+  }
+  
+  .node-processor {
+    @apply bg-geo-earth-brown text-white;
+  }
+  
+  .node-distributor {
+    @apply bg-geo-blue-water text-white;
+  }
+  
+  .node-manufacturer {
+    @apply bg-secondary text-secondary-foreground;
+  }
+  
+  .node-consumer {
+    @apply bg-muted text-primary;
+  }
+  
+  /* Compliance status indicators */
+  .compliance-success {
+    @apply text-geo-success;
+  }
+  
+  .compliance-warning {
+    @apply text-geo-warning;
+  }
+  
+  .compliance-alert {
+    @apply text-geo-alert;
+  }
+  
+  /* Map marker styling */
+  .map-marker {
+    @apply h-4 w-4 rounded-full border-2 border-white shadow-md;
+  }
+  
+  /* Card hover effects */
+  .hover-card {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
   }
 }
