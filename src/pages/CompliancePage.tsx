@@ -51,7 +51,7 @@ const CompliancePage = () => {
     {
       id: '1',
       title: 'FSMA Food Traceability Rule',
-      description: 'The FDA's Food Traceability Rule requires companies to maintain records of Key Data Elements for Critical Tracking Events.',
+      description: 'The FDA\'s Food Traceability Rule requires companies to maintain records of Key Data Elements for Critical Tracking Events.',
       deadline: 'January 20, 2026',
       status: 'Active',
       icon: <Shield className="h-5 w-5" />
