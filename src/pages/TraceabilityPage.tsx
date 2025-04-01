@@ -1,5 +1,5 @@
 
-import { FilePenLine, QrCode, History, Leaf, ArrowRightLeft } from 'lucide-react';
+import { FilePenLine, QrCode, History, Leaf, ArrowRightLeft, ExternalLink } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { QRGenerator } from '@/components/traceability/QRGenerator';
@@ -7,6 +7,7 @@ import { SupplyChainTimeline } from '@/components/dashboard/SupplyChainTimeline'
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const TraceabilityPage = () => {
   const [searchId, setSearchId] = useState('');
@@ -113,6 +114,19 @@ const TraceabilityPage = () => {
                     <History className="h-5 w-5 text-primary" />
                     <p className="text-sm">Complete visibility of product journey</p>
                   </div>
+                </div>
+                
+                <div className="mt-6 p-4 border rounded-md bg-muted/30">
+                  <h3 className="text-sm font-medium mb-2">Consumer Portal</h3>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    View the public-facing consumer traceability portal to see how your customers will experience product tracking.
+                  </p>
+                  <Button asChild variant="outline" size="sm" className="gap-1">
+                    <Link to="/consumer">
+                      <ExternalLink className="h-4 w-4 mr-1" />
+                      Open Consumer Portal
+                    </Link>
+                  </Button>
                 </div>
               </div>
               <QRGenerator productId="PRD-2023-0584" />

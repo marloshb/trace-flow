@@ -1,5 +1,5 @@
 
-import { ArrowRight, QrCode, Leaf, BarChart3, Download } from 'lucide-react';
+import { ArrowRight, QrCode, Leaf, BarChart3, Download, Globe, Shield } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -12,7 +12,17 @@ interface ProductTraceabilityProps {
   productImage?: string;
   traceabilityScore: number;
   certifications: string[];
+  origin?: {
+    country: string;
+    region: string;
+  };
+  sustainability?: {
+    co2Emissions: number;
+    waterUsage?: number;
+    organicCertified?: boolean;
+  };
   className?: string;
+  variant?: 'default' | 'consumer';
 }
 
 export function ProductTraceability({ 
@@ -21,13 +31,20 @@ export function ProductTraceability({
   productImage, 
   traceabilityScore, 
   certifications,
-  className 
+  origin,
+  sustainability,
+  className,
+  variant = 'default'
 }: ProductTraceabilityProps) {
+  const isConsumerVariant = variant === 'consumer';
+
   return (
     <Card className={cn("hover-card", className)}>
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
-          <CardTitle className="text-lg">Product Traceability</CardTitle>
+          <CardTitle className="text-lg">
+            {isConsumerVariant ? "Product Information" : "Product Traceability"}
+          </CardTitle>
           <Button variant="outline" size="icon">
             <QrCode className="h-4 w-4" />
           </Button>
@@ -48,6 +65,33 @@ export function ProductTraceability({
           </div>
         </div>
         
+        {isConsumerVariant && sustainability && (
+          <div className="mb-6 bg-muted/50 p-3 rounded-lg">
+            <h4 className="text-sm font-medium mb-2 flex items-center">
+              <Leaf className="h-4 w-4 mr-1 text-green-600" />
+              Sustainability Information
+            </h4>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-sm">CO₂ Emissions</span>
+                <span className="text-sm font-semibold">{sustainability.co2Emissions} kg</span>
+              </div>
+              {sustainability.waterUsage && (
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Water Usage</span>
+                  <span className="text-sm font-semibold">{sustainability.waterUsage} L</span>
+                </div>
+              )}
+              {sustainability.organicCertified && (
+                <div className="flex items-center gap-2 mt-2">
+                  <Shield className="h-4 w-4 text-green-600" />
+                  <span className="text-sm font-medium text-green-700">USDA Organic Certified</span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+        
         <div className="mb-4">
           <div className="flex justify-between items-center mb-1">
             <span className="text-sm">Traceability Score</span>
@@ -64,6 +108,16 @@ export function ProductTraceability({
             ))}
           </div>
         </div>
+        
+        {isConsumerVariant && origin && (
+          <div className="mb-4">
+            <h4 className="text-sm font-medium mb-2 flex items-center">
+              <Globe className="h-4 w-4 mr-1" />
+              Origin
+            </h4>
+            <p className="text-sm">{origin.region}, {origin.country}</p>
+          </div>
+        )}
         
         <div className="pt-2">
           <h4 className="text-sm font-medium mb-2">Key Data Elements</h4>
@@ -89,7 +143,7 @@ export function ProductTraceability({
           Analytics
         </Button>
         <Button variant="default" size="sm" className="gap-1">
-          View Details
+          {isConsumerVariant ? "Full Details" : "View Details"}
           <ArrowRight className="h-4 w-4" />
         </Button>
       </CardFooter>
