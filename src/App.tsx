@@ -10,6 +10,7 @@ import CompliancePage from "./pages/CompliancePage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import DataRegistrationPage from "./pages/DataRegistrationPage";
 import BlockchainPage from "./pages/BlockchainPage";
+import LogisticsPage from "./pages/LogisticsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/data-registration" element={<DataRegistrationPage />} />
           <Route path="/blockchain" element={<BlockchainPage />} />
+          <Route path="/logistics" element={<LogisticsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
