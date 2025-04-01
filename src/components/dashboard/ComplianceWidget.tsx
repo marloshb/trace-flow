@@ -3,6 +3,7 @@ import { CheckCircle, AlertCircle, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 interface ComplianceItem {
   id: string;
@@ -14,6 +15,7 @@ interface ComplianceItem {
 interface ComplianceWidgetProps {
   items: ComplianceItem[];
   className?: string;
+  onViewDetails?: () => void;
 }
 
 const statusIcons = {
@@ -23,9 +25,9 @@ const statusIcons = {
 };
 
 const statusClasses = {
-  success: 'compliance-success',
-  warning: 'compliance-warning',
-  alert: 'compliance-alert',
+  success: 'text-geo-success',
+  warning: 'text-geo-warning',
+  alert: 'text-geo-alert',
 };
 
 const progressClasses = {
@@ -34,7 +36,7 @@ const progressClasses = {
   alert: 'bg-geo-alert',
 };
 
-export function ComplianceWidget({ items, className }: ComplianceWidgetProps) {
+export function ComplianceWidget({ items, className, onViewDetails }: ComplianceWidgetProps) {
   const overallCompliance = Math.round(
     items.reduce((sum, item) => sum + item.percentage, 0) / items.length
   );
@@ -73,6 +75,17 @@ export function ComplianceWidget({ items, className }: ComplianceWidgetProps) {
             );
           })}
         </div>
+        
+        {onViewDetails && (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="w-full mt-4" 
+            onClick={onViewDetails}
+          >
+            View Compliance Details
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

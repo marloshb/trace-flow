@@ -1,12 +1,18 @@
 
+import { useState } from 'react';
 import { Shield, FileText, AlertTriangle, CheckCircle } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ComplianceStatus, ComplianceLevel } from '@/components/compliance/ComplianceStatus';
-import { Button } from '@/components/ui/button';
+import { RegulationCompliance, Regulation } from '@/components/compliance/RegulationCompliance';
+import { DocumentValidation, Document } from '@/components/compliance/DocumentValidation';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 const CompliancePage = () => {
+  const { toast } = useToast();
+  
   // Mock data for compliance items
   const complianceItems = [
     {
@@ -74,6 +80,125 @@ const CompliancePage = () => {
     }
   ];
   
+  // Mock data for regulation compliance
+  const [regulations, setRegulations] = useState<Regulation[]>([
+    {
+      id: '1',
+      name: 'FSMA Section 204',
+      description: 'Food traceability requirements for high-risk foods',
+      status: 'compliant',
+      authority: 'FDA',
+      deadline: 'January 20, 2026',
+      progress: 100,
+      documents: ['Traceability Plan', 'Critical Tracking Events Documentation']
+    },
+    {
+      id: '2',
+      name: 'EU Deforestation Regulation',
+      description: 'Due diligence requirements for deforestation-free supply chains',
+      status: 'pending',
+      authority: 'European Union',
+      deadline: 'December 30, 2024',
+      progress: 65,
+      documents: ['Due Diligence Statement', 'Supply Chain Risk Assessment']
+    },
+    {
+      id: '3',
+      name: 'Carbon Footprint Reporting',
+      description: 'Requirements for tracking and reporting emissions data',
+      status: 'non-compliant',
+      authority: 'EPA',
+      deadline: 'June 30, 2023',
+      progress: 30,
+      documents: ['Emissions Calculation Methodology', 'Annual Emissions Report']
+    },
+    {
+      id: '4',
+      name: 'Labor Standards Compliance',
+      description: 'Ethical labor requirements throughout supply chain',
+      status: 'pending',
+      authority: 'Department of Labor',
+      progress: 50,
+      documents: ['Labor Practices Audit', 'Supplier Code of Conduct']
+    }
+  ]);
+
+  // Mock data for documents
+  const [documents, setDocuments] = useState<Document[]>([
+    {
+      id: '1',
+      name: 'Traceability Plan.pdf',
+      type: 'Compliance Plan',
+      status: 'verified',
+      uploadDate: '2023-05-10',
+      expiryDate: '2024-05-10',
+      issuer: 'Internal',
+      notes: 'Approved by compliance officer'
+    },
+    {
+      id: '2',
+      name: 'Deforestation Risk Assessment.pdf',
+      type: 'Risk Assessment',
+      status: 'pending',
+      uploadDate: '2023-06-15',
+      issuer: 'Third-party Auditor'
+    },
+    {
+      id: '3',
+      name: 'Carbon Emissions Report Q1 2023.xlsx',
+      type: 'Report',
+      status: 'rejected',
+      uploadDate: '2023-04-20',
+      issuer: 'Sustainability Department',
+      notes: 'Incomplete data, needs revision'
+    },
+    {
+      id: '4',
+      name: 'Supplier Audit Results.pdf',
+      type: 'Audit',
+      status: 'pending',
+      uploadDate: '2023-05-28',
+      issuer: 'External Consultant'
+    }
+  ]);
+
+  // Handle regulation status update
+  const handleUpdateRegulationStatus = (id: string, status: Regulation['status']) => {
+    setRegulations(prev => 
+      prev.map(reg => 
+        reg.id === id ? { ...reg, status } : reg
+      )
+    );
+    
+    toast({
+      title: "Regulation Updated",
+      description: `The regulation status has been updated to ${status}.`,
+    });
+  };
+  
+  // Handle document validation
+  const handleValidateDocument = (id: string, status: 'verified' | 'rejected', notes?: string) => {
+    setDocuments(prev => 
+      prev.map(doc => 
+        doc.id === id ? { ...doc, status, notes: notes || doc.notes } : doc
+      )
+    );
+  };
+  
+  // Handle document upload (mock)
+  const handleUploadDocument = (file: File) => {
+    const newDoc: Document = {
+      id: `doc-${Date.now()}`,
+      name: file.name,
+      type: file.name.split('.').pop()?.toUpperCase() || 'Unknown',
+      status: 'pending',
+      uploadDate: new Date().toISOString().split('T')[0],
+      issuer: 'User Upload'
+    };
+    
+    setDocuments(prev => [...prev, newDoc]);
+  };
+  
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -91,9 +216,9 @@ const CompliancePage = () => {
               <FileText className="h-4 w-4" />
               <span className="hidden sm:inline">Regulations</span>
             </TabsTrigger>
-            <TabsTrigger value="alerts" className="flex items-center gap-2">
+            <TabsTrigger value="documents" className="flex items-center gap-2">
               <AlertTriangle className="h-4 w-4" />
-              <span className="hidden sm:inline">Alerts</span>
+              <span className="hidden sm:inline">Documents</span>
             </TabsTrigger>
           </TabsList>
           
@@ -159,97 +284,20 @@ const CompliancePage = () => {
           </TabsContent>
           
           <TabsContent value="regulations">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {regulationCards.map((regulation) => (
-                <Card key={regulation.id} className="hover-card">
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-lg">{regulation.title}</CardTitle>
-                      {regulation.icon}
-                    </div>
-                    <CardDescription>
-                      Deadline: {regulation.deadline}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm">{regulation.description}</p>
-                    <div className="mt-4 flex items-center">
-                      <span className="text-xs font-medium inline-flex items-center rounded-full px-2.5 py-1 bg-primary/10 text-primary">
-                        {regulation.status}
-                      </span>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline" className="w-full">View Details</Button>
-                  </CardFooter>
-                </Card>
-              ))}
+            <div className="grid grid-cols-1 gap-6">
+              <RegulationCompliance 
+                regulations={regulations} 
+                onUpdateStatus={handleUpdateRegulationStatus} 
+              />
             </div>
           </TabsContent>
-          
-          <TabsContent value="alerts">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Compliance Alerts</CardTitle>
-                <CardDescription>
-                  Stay informed about upcoming regulations and compliance issues
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="p-4 border rounded-md">
-                    <div className="flex items-start gap-3">
-                      <div className="h-8 w-8 rounded-full bg-geo-alert/20 text-geo-alert flex items-center justify-center mt-0.5">
-                        <AlertTriangle className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">Carbon Reporting Deadline Approaching</h3>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          The quarterly carbon emissions report is due in 5 days. Please ensure all data is submitted.
-                        </p>
-                        <div className="mt-2">
-                          <Button variant="outline" size="sm">Take Action</Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="p-4 border rounded-md">
-                    <div className="flex items-start gap-3">
-                      <div className="h-8 w-8 rounded-full bg-geo-warning/20 text-geo-warning flex items-center justify-center mt-0.5">
-                        <AlertTriangle className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">EUDR Documentation Update Required</h3>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          New EU Deforestation Regulation requirements will take effect next month. Update risk assessments.
-                        </p>
-                        <div className="mt-2">
-                          <Button variant="outline" size="sm">View Details</Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="p-4 border rounded-md">
-                    <div className="flex items-start gap-3">
-                      <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center mt-0.5">
-                        <FileText className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">FSMA Traceability Rule Updates</h3>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          FDA has released new guidance on the Food Traceability Rule implementation.
-                        </p>
-                        <div className="mt-2">
-                          <Button variant="outline" size="sm">Read Update</Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+
+          <TabsContent value="documents">
+            <DocumentValidation 
+              documents={documents}
+              onValidateDocument={handleValidateDocument}
+              onUploadDocument={handleUploadDocument}
+            />
           </TabsContent>
         </Tabs>
       </main>
