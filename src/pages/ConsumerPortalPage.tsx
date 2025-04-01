@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -20,11 +21,12 @@ const ConsumerPortalPage = () => {
     sustainabilityScore: 92,
   });
 
+  // Updated timeline steps with properly typed status values
   const timelineSteps = [
     {
       id: 'farmer',
       title: 'Harvesting',
-      status: 'completed',
+      status: 'completed' as const, // Explicitly type as literal
       node: 'farmer',
       date: '2024-01-15',
       location: 'Yirgacheffe, Ethiopia',
@@ -37,7 +39,7 @@ const ConsumerPortalPage = () => {
     {
       id: 'processor',
       title: 'Processing',
-      status: 'completed',
+      status: 'completed' as const,
       node: 'processor',
       date: '2024-01-20',
       location: 'Washing Station, Yirgacheffe',
@@ -50,7 +52,7 @@ const ConsumerPortalPage = () => {
     {
       id: 'distributor',
       title: 'Distribution',
-      status: 'completed',
+      status: 'completed' as const,
       node: 'distributor',
       date: '2024-02-01',
       location: 'Addis Ababa to Port of Djibouti',
@@ -63,7 +65,7 @@ const ConsumerPortalPage = () => {
     {
       id: 'manufacturer',
       title: 'Roasting & Packaging',
-      status: 'current',
+      status: 'current' as const,
       node: 'manufacturer',
       date: '2024-02-15',
       location: 'Seattle, WA',
@@ -76,7 +78,7 @@ const ConsumerPortalPage = () => {
     {
       id: 'consumer',
       title: 'Enjoy Your Coffee',
-      status: 'upcoming',
+      status: 'upcoming' as const,
       node: 'consumer',
       description: 'Brew and enjoy your sustainable, ethically sourced coffee!',
     },
