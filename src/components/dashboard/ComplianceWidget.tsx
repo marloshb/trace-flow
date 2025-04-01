@@ -1,15 +1,17 @@
 
-import { CheckCircle, AlertCircle, AlertTriangle } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle, AlertCircle, AlertTriangle, Info } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface ComplianceItem {
   id: string;
   name: string;
   status: 'success' | 'warning' | 'alert';
   percentage: number;
+  description?: string;
 }
 
 interface ComplianceWidgetProps {
@@ -41,10 +43,25 @@ export function ComplianceWidget({ items, className, onViewDetails }: Compliance
     items.reduce((sum, item) => sum + item.percentage, 0) / items.length
   );
 
+  // Calculate risk level
+  const riskLevel = overallCompliance >= 90 
+    ? { level: 'Low', color: 'text-geo-success' }
+    : overallCompliance >= 75
+      ? { level: 'Medium', color: 'text-geo-warning' }
+      : { level: 'High', color: 'text-geo-alert' };
+
   return (
     <Card className={cn("hover-card", className)}>
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg">Compliance Status</CardTitle>
+        <div className="flex justify-between items-start">
+          <div>
+            <CardTitle className="text-lg">Compliance Status</CardTitle>
+            <CardDescription>Regulatory compliance overview</CardDescription>
+          </div>
+          <div className={`flex items-center ${riskLevel.color} text-xs font-medium`}>
+            <span className="mr-1">{riskLevel.level} Risk</span>
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
         <div className="mb-4">
@@ -63,7 +80,21 @@ export function ComplianceWidget({ items, className, onViewDetails }: Compliance
               <div key={item.id} className="flex items-center justify-between">
                 <div className="flex items-center">
                   <Icon className={cn("h-4 w-4 mr-2", statusClasses[item.status])} />
-                  <span className="text-sm">{item.name}</span>
+                  <div className="flex items-center">
+                    <span className="text-sm">{item.name}</span>
+                    {item.description && (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Info className="h-3.5 w-3.5 ml-1 text-muted-foreground cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="w-64 text-xs">{item.description}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    )}
+                  </div>
                 </div>
                 <div className="flex items-center">
                   <div className="w-24 mr-2">
