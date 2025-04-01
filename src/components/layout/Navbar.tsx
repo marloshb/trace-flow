@@ -2,8 +2,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { BarChart, Package, ShieldCheck, History, FileText, LayoutGrid, Truck } from 'lucide-react';
-import { ThemeModeToggle } from '@/components/ui/theme-mode-toggle'; 
+import { BarChart, Package, ShieldCheck, History, FileText, LayoutGrid, Truck, Shield } from 'lucide-react';
+import { ThemeModeToggle } from '@/components/ui/theme-mode-toggle';
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -24,8 +24,12 @@ const Navbar = () => {
       <div className="container flex h-14 items-center">
         <div className="mr-6 flex items-center">
           <Link to="/" className="flex items-center space-x-2">
-            <Package className="h-6 w-6 text-primary" />
-            <span className="font-bold">Supply Chain Trace</span>
+            <img 
+              src="/lovable-uploads/e86b6bfc-6b2a-48cb-ac42-96b6ddbca82d.png" 
+              alt="TraceFlow Logo" 
+              className="h-8 w-auto"
+            />
+            <span className="font-bold text-primary text-lg">TraceFlow</span>
           </Link>
         </div>
         
