@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@/components/theme-provider";
 import Index from "./pages/Index";
 import TraceabilityPage from "./pages/TraceabilityPage";
 import CompliancePage from "./pages/CompliancePage";
@@ -17,22 +18,24 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/traceability" element={<TraceabilityPage />} />
-          <Route path="/compliance" element={<CompliancePage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="/data-registration" element={<DataRegistrationPage />} />
-          <Route path="/blockchain" element={<BlockchainPage />} />
-          <Route path="/logistics" element={<LogisticsPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider defaultTheme="system" enableSystem>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/traceability" element={<TraceabilityPage />} />
+            <Route path="/compliance" element={<CompliancePage />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/data-registration" element={<DataRegistrationPage />} />
+            <Route path="/blockchain" element={<BlockchainPage />} />
+            <Route path="/logistics" element={<LogisticsPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
