@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { BarChart, LineChart, PieChart, TrendingUp, Download, FileSpreadsheet } from 'lucide-react';
+import { BarChart, LineChart, PieChart, TrendingUp, Download, FileSpreadsheet, CheckCircle, AlertTriangle } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
