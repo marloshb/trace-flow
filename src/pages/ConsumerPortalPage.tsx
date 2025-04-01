@@ -21,13 +21,13 @@ const ConsumerPortalPage = () => {
     sustainabilityScore: 92,
   });
 
-  // Updated timeline steps with properly typed status values
+  // Updated timeline steps with properly typed status and node values
   const timelineSteps = [
     {
       id: 'farmer',
       title: 'Harvesting',
       status: 'completed' as const, // Explicitly type as literal
-      node: 'farmer',
+      node: 'farmer' as const, // Explicitly type as literal
       date: '2024-01-15',
       location: 'Yirgacheffe, Ethiopia',
       description: 'Coffee cherries are hand-picked at peak ripeness.',
@@ -40,7 +40,7 @@ const ConsumerPortalPage = () => {
       id: 'processor',
       title: 'Processing',
       status: 'completed' as const,
-      node: 'processor',
+      node: 'processor' as const, // Explicitly type as literal
       date: '2024-01-20',
       location: 'Washing Station, Yirgacheffe',
       description: 'Cherries are washed and sun-dried to preserve quality.',
@@ -53,7 +53,7 @@ const ConsumerPortalPage = () => {
       id: 'distributor',
       title: 'Distribution',
       status: 'completed' as const,
-      node: 'distributor',
+      node: 'distributor' as const, // Explicitly type as literal
       date: '2024-02-01',
       location: 'Addis Ababa to Port of Djibouti',
       description: 'Beans are transported via land to the port for shipping.',
@@ -66,7 +66,7 @@ const ConsumerPortalPage = () => {
       id: 'manufacturer',
       title: 'Roasting & Packaging',
       status: 'current' as const,
-      node: 'manufacturer',
+      node: 'manufacturer' as const, // Explicitly type as literal
       date: '2024-02-15',
       location: 'Seattle, WA',
       description: 'Beans are expertly roasted and packaged for retail.',
@@ -79,7 +79,7 @@ const ConsumerPortalPage = () => {
       id: 'consumer',
       title: 'Enjoy Your Coffee',
       status: 'upcoming' as const,
-      node: 'consumer',
+      node: 'consumer' as const, // Explicitly type as literal
       description: 'Brew and enjoy your sustainable, ethically sourced coffee!',
     },
   ];
