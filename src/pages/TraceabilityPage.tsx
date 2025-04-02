@@ -1,5 +1,5 @@
 
-import { FilePenLine, QrCode, History, Leaf, ArrowRightLeft, ExternalLink } from 'lucide-react';
+import { FilePenLine, QrCode, History, Leaf, ArrowRightLeft, ExternalLink, Users } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { QRGenerator } from '@/components/traceability/QRGenerator';
@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
 
 const TraceabilityPage = () => {
   const [searchId, setSearchId] = useState('');
@@ -74,8 +75,30 @@ const TraceabilityPage = () => {
           </div>
         </div>
         
+        <Card className="mb-6 border-primary/20 bg-primary/5">
+          <CardContent className="py-4">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex items-start">
+                <Users className="h-10 w-10 text-primary mr-4 mt-1" />
+                <div>
+                  <h2 className="text-lg font-medium">Network Expansion & End-to-End Traceability</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Connect your supply chain with GS1 EPCIS integration and provide transparent product information to your consumers
+                  </p>
+                </div>
+              </div>
+              <Button asChild size="sm" className="whitespace-nowrap">
+                <Link to="/consumer">
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  Open Consumer Portal
+                </Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+        
         <Tabs defaultValue="generate" className="mb-6">
-          <TabsList className="grid w-full grid-cols-4 mb-6">
+          <TabsList className="grid w-full grid-cols-5 mb-6">
             <TabsTrigger value="generate" className="flex items-center gap-2">
               <QrCode className="h-4 w-4" />
               <span className="hidden sm:inline">Generate</span>
@@ -87,6 +110,10 @@ const TraceabilityPage = () => {
             <TabsTrigger value="track" className="flex items-center gap-2">
               <History className="h-4 w-4" />
               <span className="hidden sm:inline">Track & Trace</span>
+            </TabsTrigger>
+            <TabsTrigger value="network" className="flex items-center gap-2">
+              <Users className="h-4 w-4" />
+              <span className="hidden sm:inline">Network</span>
             </TabsTrigger>
             <TabsTrigger value="sustainability" className="flex items-center gap-2">
               <Leaf className="h-4 w-4" />
@@ -148,6 +175,59 @@ const TraceabilityPage = () => {
                 Visualize the complete supply chain journey of your products from farm to consumer.
               </p>
               <SupplyChainTimeline steps={timelineSteps} />
+            </div>
+          </TabsContent>
+          <TabsContent value="network">
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold">GS1 EPCIS Network Integration</h2>
+              <p className="text-muted-foreground max-w-3xl">
+                Connect with trading partners through GS1 EPCIS standards to expand your traceability network. 
+                Exchange standardized supply chain event data for end-to-end traceability.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div className="border rounded-lg p-6 bg-muted/10">
+                  <h3 className="text-lg font-medium mb-4">GS1 EPCIS Integration</h3>
+                  <ul className="space-y-2">
+                    <li className="flex items-start">
+                      <Check className="h-5 w-5 text-green-600 mr-2" />
+                      <span>Standardized event data exchange</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-5 w-5 text-green-600 mr-2" />
+                      <span>Automated chain-of-custody tracking</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-5 w-5 text-green-600 mr-2" />
+                      <span>Seamless partner onboarding</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-5 w-5 text-green-600 mr-2" />
+                      <span>Real-time visibility across partners</span>
+                    </li>
+                  </ul>
+                  <Button className="mt-6">Configure Integration</Button>
+                </div>
+                
+                <div className="border rounded-lg p-6 bg-muted/10">
+                  <h3 className="text-lg font-medium mb-4">Trading Partners</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Connect with suppliers and buyers to exchange standardized traceability data.
+                  </p>
+                  <div className="flex justify-between mb-2">
+                    <span className="text-sm font-medium">Connected Partners</span>
+                    <span className="text-sm font-medium">7</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm font-medium">Pending Invitations</span>
+                    <span className="text-sm font-medium">3</span>
+                  </div>
+                  <div className="mt-6 grid grid-cols-2 gap-2">
+                    <Button variant="outline" size="sm">View Partners</Button>
+                    <Button size="sm">Add Partner</Button>
+                  </div>
+                </div>
+              </div>
             </div>
           </TabsContent>
           <TabsContent value="sustainability">
