@@ -1,5 +1,5 @@
 
-import { FilePenLine, QrCode, History, Leaf, ArrowRightLeft, ExternalLink, Users } from 'lucide-react';
+import { FilePenLine, QrCode, History, Leaf, ArrowRightLeft, ExternalLink, Users, Check } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { QRGenerator } from '@/components/traceability/QRGenerator';

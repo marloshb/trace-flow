@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -12,10 +11,25 @@ import { toast } from '@/hooks/use-toast';
 import { TraceabilityMap } from '@/components/traceability/TraceabilityMap';
 import { OrganicCertification } from '@/components/traceability/OrganicCertification';
 
+interface TimelineStep {
+  id: string;
+  title: string;
+  status: 'completed' | 'current' | 'upcoming';
+  node: 'farmer' | 'processor' | 'distributor' | 'manufacturer' | 'consumer';
+  date?: string;
+  location?: string;
+  description?: string;
+  sustainability?: {
+    co2Emissions?: number;
+    certifications?: string[];
+  };
+}
+
 const ConsumerPortalPage = () => {
   const [productId, setProductId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSearched, setIsSearched] = useState(false);
+  
   const [productDetails, setProductDetails] = useState({
     name: 'Organic Coffee Beans',
     brand: 'EcoBean',
@@ -23,15 +37,17 @@ const ConsumerPortalPage = () => {
     origin: 'Ethiopia',
     certifications: ['Fair Trade', 'Organic'],
     sustainabilityScore: 92,
+    co2Emissions: 45,
+    waterUsage: 60,
+    timeline: [] as TimelineStep[]
   });
 
-  // Updated timeline steps with properly typed status and node values
-  const timelineSteps = [
+  const timelineSteps: TimelineStep[] = [
     {
       id: 'farmer',
       title: 'Harvesting',
-      status: 'completed' as const, // Explicitly type as literal
-      node: 'farmer' as const, // Explicitly type as literal
+      status: 'completed' as const,
+      node: 'farmer' as const,
       date: '2024-01-15',
       location: 'Yirgacheffe, Ethiopia',
       description: 'Coffee cherries are hand-picked at peak ripeness.',
@@ -44,7 +60,7 @@ const ConsumerPortalPage = () => {
       id: 'processor',
       title: 'Processing',
       status: 'completed' as const,
-      node: 'processor' as const, // Explicitly type as literal
+      node: 'processor' as const,
       date: '2024-01-20',
       location: 'Washing Station, Yirgacheffe',
       description: 'Cherries are washed and sun-dried to preserve quality.',
@@ -57,7 +73,7 @@ const ConsumerPortalPage = () => {
       id: 'distributor',
       title: 'Distribution',
       status: 'completed' as const,
-      node: 'distributor' as const, // Explicitly type as literal
+      node: 'distributor' as const,
       date: '2024-02-01',
       location: 'Addis Ababa to Port of Djibouti',
       description: 'Beans are transported via land to the port for shipping.',
@@ -70,7 +86,7 @@ const ConsumerPortalPage = () => {
       id: 'manufacturer',
       title: 'Roasting & Packaging',
       status: 'current' as const,
-      node: 'manufacturer' as const, // Explicitly type as literal
+      node: 'manufacturer' as const,
       date: '2024-02-15',
       location: 'Seattle, WA',
       description: 'Beans are expertly roasted and packaged for retail.',
@@ -83,12 +99,11 @@ const ConsumerPortalPage = () => {
       id: 'consumer',
       title: 'Enjoy Your Coffee',
       status: 'upcoming' as const,
-      node: 'consumer' as const, // Explicitly type as literal
+      node: 'consumer' as const,
       description: 'Brew and enjoy your sustainable, ethically sourced coffee!',
     },
   ];
 
-  // Sample example product data to demonstrate GS1 EPCIS integration
   const exampleProducts = {
     'TOM-2025-001': {
       name: 'Organic Tomatoes',
@@ -159,7 +174,7 @@ const ConsumerPortalPage = () => {
           node: 'consumer' as const,
           description: 'Enjoy your fresh, sustainably grown tomatoes!',
         },
-      ]
+      ] as TimelineStep[]
     },
     'EB12345': {
       name: 'Organic Coffee Beans',
@@ -186,7 +201,6 @@ const ConsumerPortalPage = () => {
 
     setIsLoading(true);
 
-    // Simulate API call with timeout
     setTimeout(() => {
       const foundProduct = exampleProducts[productId as keyof typeof exampleProducts];
       
